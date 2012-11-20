@@ -5,28 +5,18 @@
 \usepackage{graphicx}
 \usepackage{amsthm}
 \usepackage[margin=1cm]{geometry}
-
-\newtheorem{example}{Example}
-\newtheorem{theorem}{Theorem}
-\theoremstyle{definition} \newtheorem*{solution}{Solution}
+\usepackage{setspace}
+\setstretch{0.7}
+\newenvironment{compactitem}
+{\begin{itemize}
+  \setlength{\itemsep}{1px}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}}
+{\end{itemize}}
 
 \begin{document}
-\begin{enumerate}
-\item Proving Techniques
-\begin{enumerate}
-\item Direct proof
-\item Exhaustion proof
-\item Construction proof
-\item Existential proof
-\item Contradiction proof
-\item Contrapositive proof
-\item Induction proof
-\item Pigeonhole principle
-\item Combinatorial proof
-\item Inclusion Exclusion principle
-\end{enumerate}
-\item Natural Deduction
-\begin{enumerate}
+\section{Natural Deduction}
+\begin{compactitem}
 \item Conjunction introduction: $F_1, F_2 \vdash F_1 \wedge F_2$
 \item Conjunction elimination: $F_1 \wedge F_2 \vdash F_1$
 \item Conjunction elimination: $F_1 \wedge F_2 \vdash F_2$
@@ -43,20 +33,10 @@
 \item Universal quantifier introduction: $F[Y/X] \vdash \forall X F$
 \item Existential quantifier introduction: $F[t/X] \vdash \exists X F$
 \item Existential quantifier elimination: $\exists X F_1, (F_1[Y/X] \vdash F_2) \vdash F_2$
-\end{enumerate}
-\item Model Semantics
-\begin{enumerate}
-\item Model: An interpretation $I$ is a model of a formula $F$ iff $I(F)$ is true.
-\item Tautology: A formula $F$ is a tautology iff all interpretation are models.
-\item Contradiction: A formula $F$ is a contradiction iff no interpretation is model.
-\item Contingency: A formula $F$ is a contingency iff it is neither a tautology nor a contradiction.
-\item Logical Consequence: $F_1 \models F_2$ iff all models of $F_1$ are models of $F_2$
-\item Logically Equicalent: $F_1 \equiv F_2$ iff they have the same models.
-\item $I(\exists X F) = I(\bigvee_{c\in U_H} F[c/X])$
-\item $I(\forall X F) = I(\bigwedge_{c\in U_H} F[c/X])$
-\end{enumerate}
-\item Boolean Algebra
-\begin{enumerate}
+\end{compactitem}
+\section{Boolean Algebra}
+\subsection{Axiom}
+\begin{compactitem}
 \item Identity of $\times$: $x \times 1 = x$
 \item Identity of $+$: $x +0 = x$
 \item Complementation of $\times$: $x \times \bar{x} =0$
@@ -67,6 +47,9 @@
 \item Commutativity of $+$: $x+y=y+x$
 \item Distributivity of $\times$ over $+$: $x\times(y+z)= (x\times y) +(x\times z)$
 \item Distributivity of $+$ over $\times$: $x+(y\times z)= (x+y) \times (x+z)$
+\end{compactitem}
+\subsection{Theorems}
+\begin{compactitem}
 \item Idempotence of $\times$: $x\times x = x$
 \item Idempotence of $+$: $x+x=x$
 \item Annihilator of $\times $: $x\times 0=0$
@@ -74,51 +57,20 @@
 \item Absorption of $\times$: $x\times (x+y) = x$
 \item Absorption of $+$: $x+(x\times y) =x$
 \item Unicity of complement: If $x\times y = 0$ and $x+y=1$ then $y=\bar{x}$
-\end{enumerate}
-\item Set Theory
-\begin{enumerate}
-\item Axiom 1: Empty set. There exist a set with no elements $\exists X (\forall Y(\neg(Y\in X)))$
-\item Axiom 2: Extensionality: Two sets are equal if and only if they have the same elements $\forall X\forall Y ((\forall Z(Z \in X \Leftrightarrow Z\in Y)) \Leftrightarrow X=Y)$
-\item Axiom 3: Pairing: There exists a set $Z$ that contains $X$ and $Y$. $\forall X \forall Y \exists Z \forall T ((T=X\vee T=Y)\Leftrightarrow T\in Z)$
-\item Axiom 4: Unions: $\forall S \exists T \forall Y ((Y\in T)\Leftrightarrow \exists Z((Z\in S)\wedge (Y\in Z)))$
-\item Axiom 5: Power Sets: $\forall S \exists T \forall X (( X\in T) \Leftrightarrow (X\subset S))$
-\item Axiom 6: Regularity: $\forall X (X \neq \varnothing \Rightarrow (\exists Y (Y \in X \wedge \forall Z (Z\in X \Rightarrow \neg (Z\in Y)))))$
-\item Axiom 7: Infinity: $\exists X(\varnothing \in X \wedge (\forall Y (Y\in X \Rightarrow Y\cup \{ Y \} \in X )))$
-\item Axiom 8: Separation: $ \forall X \exists Y \forall Z (Z\in Y \Leftrightarrow (Z\in X \wedge P(Z)))$
-\item Useful propositions and definitions:
-\begin{enumerate}
-\item Empty set is the subset of all sets: $\forall X \forall Z ((\forall Y \neg(Y\in X)) \Rightarrow (X\subset Z))$
-\item Definition of subset: $\forall X \forall Y (X\subset Y \Leftrightarrow (\forall Z (Z\in X \Rightarrow Z \in Y)))$
-\item Another test for equality: $\forall X \forall Y ((X\subset Y \wedge Y\subset X)\Leftrightarrow X=Y)$
-\item Intersection: Let $S$ be a set of sets. $T$ is the intersection of the sets in sets if $\forall S \exists T \forall Y ((Y\in T) \Leftrightarrow \forall Z ((Z\in S)\Rightarrow (Y\in Z)))$
-\end{enumerate}
-\end{enumerate}
-\item Relations
-\begin{enumerate}
-\item The binary relation $\mathcal{R}$ is a subset of the Cartesian product $S\times T$
-\item $s\mathcal{R}t \Leftrightarrow <s,t>\in \mathcal{R}$
-\item $Dom(\mathcal{R}) = \{ s\in S\;|\; \exists t\in T(s\mathcal{R}t)\}, Im(\mathcal{R})=\{ t\in T \;|\; \exists s\in S (s\mathcal{R}t)\}, coDom(\mathcal{R})=T$
-\item Inverse: If $\mathcal{R} \subset S\times T$, then $\forall s \in S \forall t \in T (t \mathcal{R}^{-1} s \Leftrightarrow s \mathcal{R} t)$ 
-\item Composition: If $\mathcal{R} \subset S\times T, \mathcal{R}' \subset T\times U$, then $\forall x \in S \forall z \in U (x\mathcal{R}' \circ \mathcal{R}z \Leftrightarrow (\exists y \in T (x\mathcal{R}y \wedge y \mathcal{R}'z)))$.
-\item Composition is associative, and $(\mathcal{R}'\circ \mathcal{R})^{-1} = \mathcal{R}^{-1} \circ \mathcal{R}'^{-1}$
-\item Reflexive: $\forall X \in A (x\mathcal{R}x)$
-\item Symmetric: $\forall x, y \in A (x\mathcal{R}y \Rightarrow y\mathcal{R}x)$
-\item Transitive: $\forall x, y, z \in A((x\mathcal{R} y \wedge y \mathcal{R}z)\Rightarrow x\mathcal{R}z)$
-\item Equivalence relation: $\mathcal{R}$ is reflexive, symmetric and transitive.
-\item If $\mathcal{R}$ is an equivalence relation on a set $A$, then the equivalence class of $x$, $E^{\mathcal{R}}_{x} = \{ y\in A | x\mathcal{R} y\}$. $A/\mathcal{R}$ is the set of equivalence classes.
-\item If $\mathcal{R}$ is an equivalence relation on a set $A$, then $A/\mathcal{R}$ is a partition of $A$.
-\item The transitive closure of $\mathcal{R}$, $\mathcal{R}^*$ satisfies the properties that $\mathcal{R}^*$ is transitive and $\mathcal{R} \in \mathcal{R}^*$. Furthermore if $\mathcal{S}$ is another transitive relation, then $\mathcal{R}\in \mathcal{S} \Rightarrow \mathcal{R}^* \in \mathcal{S}$ 
-\item Repeated composition: $\mathcal{R}^n = \bigodot_{1\le i \le n} \mathcal{R}$
-\item $\mathcal{R}^* = \bigcup^{\infty}_{i=1} \mathcal{R}^i$
-\item Anti-symmetric: $\forall x \in A \forall y \in A (( x\mathcal{R} y \wedge y\mathcal{R} x)\Rightarrow x=y)$
-\item $\mathcal{R}$ is a partial order if it is anti-symmetric, reflexive and transitive. A relation that is a partial order is denoted as $\preceq$
-\item Two elements are comparable if $a \preceq b \vee b\preceq a$. A total order is a partial order where all elements are comparable.
-\item Maximal element: $\forall y \in A (x\preceq y \Rightarrow x=y)$. Maximum element, $\top$: $\forall x \in A (x\preceq \top)$
-\item Minimal element: $\forall y \in A (y\preceq x \Rightarrow x=y)$. Maximum element, $\bot$: $\forall x \in A (\bot\preceq x)$
-\item $A$ is well ordered iff every non-empty subset of $A$ as a minimum element.
-\end{enumerate}
-\item Functions ($f\subset S\times T$ unless stated otherwise)
-\begin{enumerate}
+\end{compactitem}
+\section{Sets}
+\begin{compactitem}
+\item Empty set. There exist a set with no elements $\exists X (\forall Y(\neg(Y\in X)))$
+\item Extensionality: Two sets are equal if and only if they have the same elements $\forall X\forall Y ((\forall Z(Z \in X \Leftrightarrow Z\in Y)) \Leftrightarrow X=Y)$
+\item Pairing: There exists a set $Z$ that contains $X$ and $Y$. $\forall X \forall Y \exists Z \forall T ((T=X\vee T=Y)\Leftrightarrow T\in Z)$
+\item Unions: $\forall S \exists T \forall Y ((Y\in T)\Leftrightarrow \exists Z((Z\in S)\wedge (Y\in Z)))$
+\item Power Sets: $\forall S \exists T \forall X (( X\in T) \Leftrightarrow (X\subset S))$
+\item Regularity: $\forall X (X \neq \varnothing \Rightarrow (\exists Y (Y \in X \wedge \forall Z (Z\in X \Rightarrow \neg (Z\in Y)))))$
+\item Infinity: $\exists X(\varnothing \in X \wedge (\forall Y (Y\in X \Rightarrow Y\cup \{ Y \} \in X )))$
+\item Separation: $ \forall X \exists Y \forall Z (Z\in Y \Leftrightarrow (Z\in X \wedge P(Z)))$
+\end{compactitem}
+\section{Functions}
+\begin{compactitem}
 \item Uniqueness: $\exists!x\in T p(x) \equiv \exists x \in T (p(x) \wedge \forall y \in T (p(y) \Rightarrow x=y))$ 
 \item Definition of function: $f: S \rightarrow T \Leftrightarrow \forall x \in S \;\exists y \in T (x\;f\;y \wedge (\forall z \in T (x\;f\;z \Rightarrow y=z)))$ or $\forall x\in S \;\exists!y \in T (x\;f\;y)$
 \item Notation: $f(x)=y \Leftrightarrow <x,y>\in f$
@@ -133,48 +85,46 @@
 \item Identity function, $\mathcal{I}_A$: $\forall x \in A (\mathcal{I}_A(x)=x)$ 
 \item If $f: A \rightarrow A$ is injective, then $f^{-1} \circ f = \mathcal{I}_A$
 \item A $n$-ary operation on a set $A$ is a function $f: \prod^n_1A\rightarrow A$
-\item Proving injectivity: Suppose $f(x_1)=f(x_2)$, then prove $x_1=x_2$
-\item Proving surjectivity: Express $x$ in terms of $y$ and then check if it is within the domain.
-\end{enumerate}
-\item Number systems
-\begin{enumerate}
+\end{compactitem}
+\section{Number System}
+\begin{compactitem}
 \item Peano's Axioms: The set of natural numbers is the smallest set such that:
-\begin{enumerate}
+\begin{compactitem}
 \item $\exists 0 \; (0 \in \mathbb{N})$
 \item There exist a function $s$ on $\mathbb{N}$. $s(n) = n'$, the successor of $n$.
 \item $\forall n \in \mathbb{N} \;(n' \neq 0)$
 \item $n \in \mathbb{N}\; \forall m \in \mathbb{N} \; (n' = m' \Rightarrow n=m)$
 \item $\forall K \subset \mathbb{N} \; \forall n\in \mathbb{N} \;((0\in K \wedge (n \in K \Rightarrow n' \in K))\Rightarrow K = \mathbb{N} )$  
-\end{enumerate}
+\end{compactitem}
 \item Ordering Lemma: Let $m\in \mathbb{N}_c$. Then $n\leq m \vee m\leq n$.
 \item Addition is the smallest binary operation on $\mathbb{N}$ such that:
-\begin{enumerate}
+\begin{compactitem}
 \item $\forall n \in \mathbb{N} \;(n+0=n)$
 \item $ \forall n\in \mathbb{N} \; \forall m\in \mathbb{N} (n+m' = (n+m)')$
-\end{enumerate}
+\end{compactitem}
 \item Multiplication is the smallest binary operation on $\mathbb{N}$ such that:
-\begin{enumerate}
+\begin{compactitem}
 \item $\forall n \in \mathbb{N} \; (n\times 0 = 0)$
 \item $\forall n \in \mathbb{N} \forall m \in \mathbb{N} (n\times m' = (n\times m)+n)$
-\end{enumerate}
+\end{compactitem}
 \item Integers
-\begin{enumerate}
+\begin{compactitem}
 \item Let $\approx$ be a relation on $\mathbb{N} \times \mathbb{N}$ such that $\forall n_1 \in \mathbb{N} \; \forall n_2 \in \mathbb{N} \; \forall m_1 \in \mathbb{N} \; \forall m_2 \in \mathbb{N} \;(<n_1, n_2> \approx <m_1, m_2> \Leftrightarrow n_2+m_1=m_2+n_1)$. The set of integers is given by $\mathbb{Z} = (\mathbb{N} \times \mathbb{N})/\approx$
 \item $a+b = <a_1+b_1, a_2+b_2>$
 \item $a-b = <a_1+b_2, a_2+b_1>$
 \item $a\times b = <a_1\times b_2+a_2\times b_1, a_1\times b_1+a_2\times b_2 >$
-\end{enumerate}
+\end{compactitem}
 \item Rationals
-\begin{enumerate}
+\begin{compactitem}
 \item Let $\approx$ be a relation on $\mathbb{N} \times \mathbb{N}\backslash\{0\}$ such that $\forall n_1 \in \mathbb{N} \; \forall n_2 \in \mathbb{N}\backslash \{0\} \; \forall m_1 \in \mathbb{N} \; \forall m_2 \in \mathbb{N}\backslash\{0\} \;(<n_1, n_2> \approx <m_1, m_2> \Leftrightarrow n_2\times m_1=m_2\times n_1)$. The set of rationals is given by $\mathbb{Z} = (\mathbb{N} \times \mathbb{N}\backslash \{0\})/\approx$
 \item $a\times b = <a_1\times b_1, a_2\times b_2>$
 \item $a+b = <(a_1\times b_2+b_1\times a_2, a_2\times b_2>$
 \item $a-b = <(a_1\times b_2-b_1\times a_2, a_2\times b_2>$
 \item $a/b = <a_1\times b_2, a_2\times b_1>$
-\end{enumerate}
-\end{enumerate}
-\item Number Theory
-\begin{enumerate}
+\end{compactitem}
+\end{compactitem}
+\section{Number Theory}
+\begin{compactitem}
 \item Let $n\in \mathbb{N}$ and $m\in \mathbb{N}^+$. $m | n \Leftrightarrow \exists q \in \mathbb{N} \; (n=m\times q)$
 \item Division algorithm: Let $n\in \mathbb{N}$, $m\in \mathbb{N}^+$, $\exists !q\in \mathbb{N} \; \exists !r\in \mathbb{N} \;(n=q\times m+r \wedge r<m)$
 \item $n$ and $m$ are relatively prime ($n\perp m$) iff $\forall c\in \mathbb{N}^+ (((c|n)\wedge (c|m))\Rightarrow c=1)$
@@ -189,9 +139,9 @@
 \item If $n_1\equiv m_1 \pmod{c} \wedge n_2 \equiv m_2 \pmod{c}$, then $n_1+n_2 \equiv m_1+m_2 \pmod{c}$
 \item If $n_1\equiv m_1 \pmod{c} \wedge n_2 \equiv m_2 \pmod{c}$, then $n_1\times n_2 \equiv m_1\times m_2 \pmod{c}$
 \item Fermat's Little Theorem: If $p$ is prime then $a^p\equiv a\pmod{p}$
-\end{enumerate}
-\item Cardinality
-\begin{enumerate}
+\end{compactitem}
+\section{Cardinality}
+\begin{compactitem}
 \item A set is finite iff it is the empty set or there is a bijection from the set to some $\mathbb{Z}_n$
 \item Cardinality of a finite set is 0 if the set is empty set or $n$ if there is a bijection from the set to some $\mathbb{Z}_n$.
 \item $\aleph_0 \equiv |\mathbb{Z}^+|$
@@ -201,9 +151,9 @@
 \item The set of real numbers is uncountable
 \item $|A|<|\mathcal{P}(A)|$
 \item $|\mathbb{R}|=|\mathcal{P}(\mathbb{Z})|$
-\end{enumerate}
-\item Counting
-\begin{enumerate}
+\end{compactitem}
+\section{Counting}
+\begin{compactitem}
 \item Product Rule: If $A_1, A_2, \cdots A_n$ are finite sets, then $|\prod_{i=1}^n A_i| = \prod_{i=1}^n|A_i|$.
 \item Sum Rule: If $A_1, A_2, \cdots A_n$ are disjoint finite sets, then $|\bigcup_{i=1}^n A_i| = \sum_{i=1}^n|A_i|$.
 \item Difference Rule: if $A$ is a finite set and $B$ is a subset of $A$, then $|A-B| = |A|-|B|$.
@@ -216,25 +166,25 @@
 \item Binomial theorem: $(x+y)^n = \sum^n_{r=0} \binom{n}{r}x^{n-r}y^r$
 \item Pascal's identity: $\binom{n+1}{k} = \binom{n}{k-1} + \binom{n}{k}$
 \item Generalised Pigeonhole Principle: If $N$ objects are placed into $k$ boxes, there is at least 1 box which contain at least $\lceil \frac{N}{k} \rceil$ objects.
-\end{enumerate}
-\item Graphs
-\begin{enumerate}
+\end{compactitem}
+\section{Graphs}
+\begin{compactitem}
 \item A pseudograph $G = (V(G), E(G), f_G)$ consists of 
-\begin{enumerate}
+\begin{compactitem}
 \item A non-empty vertex set of vertices
 \item An edge set of edges
 \item An incidence function $f_G: E(G) \rightarrow \{\{u, v\}|u, v\in V(G)\}$
-\end{enumerate}
+\end{compactitem}
 \item An edge $e$ is called a loop if $f_G(e) = \{u\}$ for some $u\in V(G)$
 \item If $f_G(e_1) = f_G(e_2)$, then the two edges are called multiple or parallel edges
 \item A simple graph has no loops or parallel edges, a multigraph has no loops
 \item An edge $e$ is incident with vertices $u$ and $v$ if $f_G(e) = \{ u, v \}$. The two vertices are adjacent. Two edges are called adjacent if they have are incident with a common vertex.
 \item A directed multigraph $G = (V(G), E(G), f_G)$ consists of 
-\begin{enumerate}
+\begin{compactitem}
 \item A non-empty vertex set of vertices
 \item An edge set of directed edges
 \item An incidence function $f_G: E(G) \rightarrow \{(u, v)|u, v\in V(G)\}$
-\end{enumerate}
+\end{compactitem}
 \item A complete graph is a simple graph where every two distinct vertices are adjacent
 \item A complete bipartite graph on $(m, n)$ vertices, denoted by $K_{m,n}$ is a simple graph with $V(K_{m, n}) = \{u_1, u_2, \cdots u_m\} \cup \{v_1, \cdots v_n\}$ and $E(K_{m, n}) = \{\{u_i, v_j\}|i=1, \cdots, m; j = 1, \cdots n\}$
 \item A graph $H$ is a subgraph of $G$ if $V(H)\subseteq V(G)$, $E(H) \subseteq E(G)$ and $\forall e\in E(H)\; (f_H(e) = f_G(e))$
@@ -247,9 +197,9 @@
 \item A graph has an Euler tour if and only if it has no vertices of odd degree. A graph has an Euler trail but not an Euler tour if and only if it has exactly two vertices of odd degree.
 \item A Hamiltonian path is a path containing all vertices in $G$. A cycle is a closed trail whose origin and internal vertices are distinct. A Hamiltonian cycle is a cycle which contains all vertices of G.
 \item Let $G$ be an undirected graph and the vertices are ordered as $V(G) = \{v_1, v_2, \cdots v_n\}$. The adjacency matrix of $G$ is the $n\times n$ matrix $A(G) = [a_{ij}]$ such that $a_{ij} = |\{e\in E(G) | f_G(e) = \{v_i, v_j\}\}|$
-\end{enumerate}
-\item Trees
-\begin{enumerate}
+\end{compactitem}
+\section{Trees}
+\begin{compactitem}
 \item A tree is an acyclic connected undirected graph. A forest is an acyclic undirected graph.
 \item There is a unique path between any two distinct vertices in a graph iff the graph is a tree
 \item If $G$ is a tree iff $|E(G)| = |V(G)|-1$
@@ -258,6 +208,5 @@
 \item A graph is connected if and only if there is a spanning tree
 \item A weighted graph is a graph where all edges has an associated real valued weight
 \item A minimum spanning tree of a connected weighted graph is the spanning tree that has the smallest possible sum of weights in its edges
-\end{enumerate}
-\end{enumerate}
+\end{compactitem}
 \end{document}  
