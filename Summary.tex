@@ -2,7 +2,6 @@
 \pagestyle{empty}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphicx}
 \usepackage{amsthm}
 \usepackage[margin=1cm]{geometry}
 \usepackage{setspace}
@@ -28,12 +27,44 @@
 \item Implication introduction: $(F_1 \vdash F_2)\vdash F_1\Rightarrow F_2$
 \item Double negation introduction: $F_1 \vdash \neg\neg F_1$
 \item Implication elimination (Modus Ponens): $F_1, F_1 \Rightarrow F_2 \vdash F_2$
+
+Proof: Disjunction Introduction, then Disjunction Elimination
 \item Modus Tollens: $F_1\Rightarrow F_2, \neg F_2 \vdash \neg F_1$
 \item Universal quantifier elimination: $\forall X F \vdash F[t/X]$
 \item Universal quantifier introduction: $F[Y/X] \vdash \forall X F$
 \item Existential quantifier introduction: $F[t/X] \vdash \exists X F$
 \item Existential quantifier elimination: $\exists X F_1, (F_1[Y/X] \vdash F_2) \vdash F_2$
+\item Equality Introduction: $\vdash t = t$
+\item Equality Elimination: $u = v, F[u/X] \vdash F[v/X]$
 \end{compactitem}
+\subsection{Herbrand's stuff}
+The collection of terms that do not contain variables, also called ground terms, is called the \textbf{Herbrand's universe} (or universe of discourse, domain of discourse), noted $\mathcal{U}_H$.
+
+The collction of atoms that do not contain variables, also called ground atoms, is called the \textbf{Herbrand's base}, noted $\mathcal{B}_H$.
+
+F is a well formed formula(wff) or compound statement if F is an atom of $\mathcal{B}_H$.
+
+$F_1<operator>F_2$ is a wff.
+
+$(\forall X F)$ and $(\exists X F)$ are wffs
+section{Model Semantics}
+\subsection{Models}
+\begin{compactitem}
+\item An interpretation I is a \textbf{model} of a formula F iff $I(F)=true$.
+\item An interpretation I is a \textbf{counter-model} of a formula F iff $I(F)=false$.
+\item A formula F is a \textbf{tautology} (or is valid) iff all interpretations are models.
+\item \textbf{contradiction} iff no one is model
+\item \textbf{contengency} iff it is neigher.
+\item $F_n$ is a logical consequence of $F_1,...,F_{n-1}$, $F_1,...,F_{n-1}\models F_n$, iff all models common to $F_1,...,F{n-1}$ are models of $F_n$.
+\item $F_1$ and $F_2$ are logically equivalent, $F_1\equiv F_2$, iff they have the same models.
+\end{compactitem}
+\subsection{Predicate Calculus}
+An interpretation $I$ is a mapping of the atoms in Herbrand's base to the truth values {true, false} such that:
+\begin{compactitem}
+\item $I(\exists X  F)=I(\bigvee\limits_{c\in \mathcal{U}_H} F[c/X])$
+\item $I(\forall X  F)=I(\bigwedge\limits_{c\in \mathcal{U}_H} F[c/X])$
+\end{compactitem}
+Useful rules for proofs: De Morgan's law, communtativity of $\land$ and $\lor$
 \section{Boolean Algebra}
 \subsection{Axiom}
 \begin{compactitem}
@@ -69,10 +100,86 @@
 \item Infinity: $\exists X(\varnothing \in X \wedge (\forall Y (Y\in X \Rightarrow Y\cup \{ Y \} \in X )))$
 \item Separation: $ \forall X \exists Y \forall Z (Z\in Y \Leftrightarrow (Z\in X \wedge P(Z)))$
 \end{compactitem}
+\subsection{Operations}
+\begin{compactitem}
+\item Intersection: $T=\bigcap S = \bigcap\limits_{X\in S}X$: 
+$$\forall S\exists T\forall Y((Y\in T)\Leftrightarrow\forall Z((Z\in S)\Rightarrow(Y\in Z)))$$
+\item Disjoint: S and T are disjoint iff $S\cap T=\emptyset$
+\item Mutually Disjoint: Sets $T\in V$ are mutually disjoint iff every two different sets are disjoint.
+$$\forall X\in V\forall Y\in V(X\neq Y\Rightarrow X\cap Y=\emptyset)$$
+\item Partition: Let S be a set, and let V be a set of non-empty subsets of S. Then V is called a partition of S iff sets in V are mutually disjoint and their union is equal to S.
+$$\forall S\in V\forall T\in V((\bigcup\limits_{X\in V}X=U)\land(S\neq T\Rightarrow S\cap T=\emptyset))$$
+\item Non-symmetric Difference of S and T, $S\setminus T$ is the set that contains the elements that belong to S and do not belong to T, nothing less and nothing more.
+\item Symmertric Difference of S and T, $S-T$ is the set that contains the elements that belong to S or T but not both, nothing less and nothing more.
+\item Complement of $T\subset S$ in S, $\overline T$, if non-ambiguous, is $S\setminus T$
+\end{compactitem}
+\section{Relations}
+\subsection{Pair and stuff}
+\begin{compactitem}
+\item Ordered pair: $<x, y>$ in S is $\{\{x\}, \{x, y\}\}$
+\item Characteristic Property: $<x_1,y_1>=<x_2,y_2>\Leftrightarrow(x_1=x_2\land y_1=y_2)$
+\item Cartesian product of S and T, $S\times T$ is a set such that
+$\forall X\forall Y(<X, Y>\in S\times T\Leftrightarrow(X\in S)\land(Y\in T))$
+\item t-uple(triple, quadruple, quintuple etc): $<X_1,X_2,..X_n>$ means $<..<X_1,X_2>,X_3>,...,X_n>$ which allows Cartesian product of more than 2 sets
+\end{compactitem}
+\subsection{Relations}
+\subsubsection{Definitions}
+Let S and T be two sets. A binary relation from S to T, noted $\mathcal{R}$, is a subset of the cartesian product $S\times T$.
+
+$s\,\mathcal{R}\,t$ stands for $<s,t>\in\mathcal{R}$.
+
+The \textbf{domain} $Dom(\mathcal{R})=\{s\in S|\exists t\in T(s\,\mathcal{R}\,t\}$
+
+The \textbf{image} $Im(\mathcal{R})=\{t\in T|\exists s\in S(s\,\mathcal{R}\,t)\}$
+
+The \textbf{co-domain}, or \textbf{range} $coDom(\mathcal{R})=T$
+\subsubsection{Equivalence}
+$\mathcal{R}$ is called an \textbf{equivalence} relation iff $\mathcal{R}$ is reflexive, symmertric and transitive.
+
+Let $x\in A$. The \textbf{equivalence class} of x for $\mathcal{R}$ in A, denoted $E_x^\mathcal{R}$, is the set of all elements $y\in A$ that are in relation with x. $E_x^\mathcal{R}=\{y\in A|x\mathcal{R}y\}$
+
+The set of equivalence classes for $\mathcal{R}$ in A, denoted $A/\mathcal{R}$ is the set: $A/\mathcal{R}=\{s\in\mathcal{P}(A)|\exists x\in A(s=E_x^\mathcal{R})\}$, and it is a partition of A.
+
+Conversely, given a partition of a set A, there exists an equivalence relation on A whose equivalence classes make up precisely that partition.
+
+We can construct a relation that:
+$\forall x,y\in A(x\,\mathcal{R}\,y\Leftrightarrow \text{there is a set }S_i \text{ in the partition such that }x\in S_i\land y\in S_i)$
+\subsubsection{Transitive closure}
+Transitive closure of $\mathcal{R}$, $\mathcal{R}^*$, is a relation such that:
+\begin{compactitem}
+\item $\mathcal{R}^*$ is transitive
+\item $\mathcal{R}\subset\mathcal{R}^*$
+\item If $\mathcal{S}$ is any other transitive relation such that $\mathcal{R}\subset\mathcal{S}$, then $\mathcal{R}^*\subset\mathcal{S}$.
+\end{compactitem}
+\textbf{Proposition 5.5.2}: $\mathcal{R}^*=\bigcup\limits_{i=1}^\infty\mathcal{R}^i$ 
+\subsubsection{Partial and Total Orders}
+$\mathcal{R}$ is said to be \textbf{anti-symmertric} iff $$\forall x\in A\forall y\in A((x\,\mathcal{R}\,y\land y\,\mathcal{R}\,x)\Rightarrow x=y)$$
+
+$\mathcal{R}$ is said to be a partial order iff it is reflexive, anti-symmertric and transitive, denoted as $\preceq$.
+
+A is called a partially order set with respect to a partial order relation on it.
+
+Elements a and b of A are said to be \textbf{comparable} iff either $a\preceq b$ or $b\preceq a$, otherwise they are \textbf{noncomparable}.
+
+Let $\preceq$ be a partial order on A. $\preceq$ is said to be a \textbf{total order} iff $\forall x, y\in A(x\preceq y\lor y\preceq x)$.
+
+An element x is a \textbf{maximal element} iff $\forall y\in A(x\preceq y\Rightarrow x=y)$
+
+An element $\top$ is the \textbf{maximum element} iff $\forall x\in A(x\preceq\top)$.
+
+An element x is the \textbf{minimal element} iff $\forall y\in A(y\preceq x\Rightarrow x=y)$
+
+An element $\bot$ is the \textbf{minimum element} iff $\forall x\in A(\bot\preceq x)$
+
+A is \textbf{well ordered} if every non-empty subset of A contains a minimum element:
+$$\forall S\in\mathcal{P}(A)(S\neq\emptyset\Rightarrow(\exists x\in S\forall y\in S(x\preceq y)))$$
+
+Note that there can be multiple -mal values but there can be only one unique -mum value. In totally ordered relationship, -mal value will also be -mum value.
+\subsubsection{Hasse Diagrams}
+Directed graph $-$ self loops $-$ arrows implied by the transitive property $-$ direction of arrows
 \section{Functions}
 \begin{compactitem}
-\item Uniqueness: $\exists!x\in T p(x) \equiv \exists x \in T (p(x) \wedge \forall y \in T (p(y) \Rightarrow x=y))$ 
-\item Definition of function: $f: S \rightarrow T \Leftrightarrow \forall x \in S \;\exists y \in T (x\;f\;y \wedge (\forall z \in T (x\;f\;z \Rightarrow y=z)))$ or $\forall x\in S \;\exists!y \in T (x\;f\;y)$
+\item Definition: $f: S \rightarrow T \Leftrightarrow \forall x \in S \;\exists y \in T (x\;f\;y \wedge (\forall z \in T (x\;f\;z \Rightarrow y=z)))$
 \item Notation: $f(x)=y \Leftrightarrow <x,y>\in f$
 \item $Dom(f) = S$
 \item $x$ is a pre-image of $y$ if $f(x)=y$ while the inverse image of $y$ is the set of all its pre-images.
@@ -96,7 +203,7 @@
 \item $n \in \mathbb{N}\; \forall m \in \mathbb{N} \; (n' = m' \Rightarrow n=m)$
 \item $\forall K \subset \mathbb{N} \; \forall n\in \mathbb{N} \;((0\in K \wedge (n \in K \Rightarrow n' \in K))\Rightarrow K = \mathbb{N} )$  
 \end{compactitem}
-\item Ordering Lemma: Let $m\in \mathbb{N}_c$. Then $n\leq m \vee m\leq n$.
+\item Ordering Lemma: $m, n\in \mathbb{N}_c \Rightarrow n\leq m \vee m\leq n$.
 \item Addition is the smallest binary operation on $\mathbb{N}$ such that:
 \begin{compactitem}
 \item $\forall n \in \mathbb{N} \;(n+0=n)$
@@ -142,13 +249,15 @@
 \end{compactitem}
 \section{Cardinality}
 \begin{compactitem}
-\item A set is finite iff it is the empty set or there is a bijection from the set to some $\mathbb{Z}_n$
+\item A set is \textbf{finite} iff it is the empty set or there is a bijection from the set to some $\mathbb{Z}_n$
 \item Cardinality of a finite set is 0 if the set is empty set or $n$ if there is a bijection from the set to some $\mathbb{Z}_n$.
 \item $\aleph_0 \equiv |\mathbb{Z}^+|$
-\item A set is countably infinite iff $|S| = \aleph_0$. Otherwise it is uncountable. A set is countably infinite iff its elements can be arranged without duplication and omission in an infinite list.
+\item A set is \textbf{countably infinite} iff $|S| = \aleph_0$. Otherwise it is \textbf{uncountable}.
+\item A set is \textbf{countably infinite} iff its elements can be arranged without duplication and omission in an infinite list.
 \item Given $n$ countably infinite sets, the cartesian product of these sets are also countably infinite
 \item The union of countably many countable sets is countable
 \item The set of real numbers is uncountable
+\item Diagonal listing: $f(m, n) = (m + n - 2)(m + n - 1) / 2 + m$
 \item $|A|<|\mathcal{P}(A)|$
 \item $|\mathbb{R}|=|\mathcal{P}(\mathbb{Z})|$
 \end{compactitem}
@@ -175,28 +284,28 @@
 \item An edge set of edges
 \item An incidence function $f_G: E(G) \rightarrow \{\{u, v\}|u, v\in V(G)\}$
 \end{compactitem}
-\item An edge $e$ is called a loop if $f_G(e) = \{u\}$ for some $u\in V(G)$
-\item If $f_G(e_1) = f_G(e_2)$, then the two edges are called multiple or parallel edges
-\item A simple graph has no loops or parallel edges, a multigraph has no loops
-\item An edge $e$ is incident with vertices $u$ and $v$ if $f_G(e) = \{ u, v \}$. The two vertices are adjacent. Two edges are called adjacent if they have are incident with a common vertex.
-\item A directed multigraph $G = (V(G), E(G), f_G)$ consists of 
+\item An edge $e$ is called a \textbf{loop} if $f_G(e) = \{u\}$ for some $u\in V(G)$
+\item If $f_G(e_1) = f_G(e_2)$, then the two edges are called \textbf{multiple} or \textbf{parallel} edges
+\item A \textbf{simple graph} has no loops or parallel edges, a \textbf{multigraph} has no loops
+\item An edge $e$ is \textbf{incident} with vertices $u$ and $v$ if $f_G(e) = \{ u, v \}$. The two vertices are \textbf{adjacent}. Two edges are called adjacent if they are incident with a common vertex.
+\item A \textbf{directed multigraph} $G = (V(G), E(G), f_G)$ consists of 
 \begin{compactitem}
 \item A non-empty vertex set of vertices
 \item An edge set of directed edges
 \item An incidence function $f_G: E(G) \rightarrow \{(u, v)|u, v\in V(G)\}$
 \end{compactitem}
-\item A complete graph is a simple graph where every two distinct vertices are adjacent
-\item A complete bipartite graph on $(m, n)$ vertices, denoted by $K_{m,n}$ is a simple graph with $V(K_{m, n}) = \{u_1, u_2, \cdots u_m\} \cup \{v_1, \cdots v_n\}$ and $E(K_{m, n}) = \{\{u_i, v_j\}|i=1, \cdots, m; j = 1, \cdots n\}$
-\item A graph $H$ is a subgraph of $G$ if $V(H)\subseteq V(G)$, $E(H) \subseteq E(G)$ and $\forall e\in E(H)\; (f_H(e) = f_G(e))$
+\item A \textbf{complete graph} is a simple graph where every two distinct vertices are adjacent
+\item A \textbf{complete bipartite graph} on $(m, n)$ vertices, denoted by $K_{m,n}$ is a simple graph with $V(K_{m, n}) = \{u_1, u_2, \cdots u_m\} \cup \{v_1, \cdots v_n\}$ and $E(K_{m, n}) = \{\{u_i, v_j\}|i=1, \cdots, m; j = 1, \cdots n\}$
+\item A graph $H$ is a \textbf{subgraph} of $G$ if $V(H)\subseteq V(G)$, $E(H) \subseteq E(G)$ and $\forall e\in E(H)\; (f_H(e) = f_G(e))$
 \item The vertex degree $d_G(v)$ of vertex $v$ is the number of edges incident with $v$
 \item Handshake Theorem: Let $G$ be an undirected graph. Then $\sum_{v\in V(G)} d_G(v) = 2|E(G)|$
-\item A walk of length $n$ in $G$ is defined as an alternating sequence of vertices and edges of $G$ $v_0e_1v_1e_2\cdots e_n v_n$ where $e_i$ connects its endpoints $v_{i-1}$ and $v_{i}$. A trail is a walk of distinct edges while a path is a trail with distinct vertices.
+\item A \textbf{walk} of length $n$ in $G$ is defined as an alternating sequence of vertices and edges of $G$ $v_0e_1v_1e_2\cdots e_n v_n$ where $e_i$ connects its endpoints $v_{i-1}$ and $v_{i}$. A \textbf{trail} is a walk of distinct edges while a \textbf{path} is a trail with distinct vertices.
 \item A graph is connected if there is a walk between any two vertices in the graph.
-\item An undirected graph $H$ is called a connected component of $G$ if $H$ is a subgraph of $G$, $H$ is connected and no connected subgraph of $G$ has $H$ as its proper subgraph.
-\item An Euler trail is a trial traversing all edges in a graph. A closed walk is a walk that starts and ends at the same vertex. A tour is a closed walk that traverse all edges in a graph at least once. An Euler tour is a tour that traverse each edge exactly once.
+\item An undirected graph $H$ is called a \textbf{connected component} of $G$ if $H$ is a subgraph of $G$, $H$ is connected and no connected subgraph of $G$ has $H$ as its proper subgraph.
+\item An Euler trail is a trail traversing all edges in a graph. A closed walk is a walk that starts and ends at the same vertex. A tour is a closed walk that traverse all edges in a graph at least once. An Euler tour is a tour that traverse each edge exactly once.
 \item A graph has an Euler tour if and only if it has no vertices of odd degree. A graph has an Euler trail but not an Euler tour if and only if it has exactly two vertices of odd degree.
 \item A Hamiltonian path is a path containing all vertices in $G$. A cycle is a closed trail whose origin and internal vertices are distinct. A Hamiltonian cycle is a cycle which contains all vertices of G.
-\item Let $G$ be an undirected graph and the vertices are ordered as $V(G) = \{v_1, v_2, \cdots v_n\}$. The adjacency matrix of $G$ is the $n\times n$ matrix $A(G) = [a_{ij}]$ such that $a_{ij} = |\{e\in E(G) | f_G(e) = \{v_i, v_j\}\}|$
+\item Let $G$ be an undirected graph and the vertices are ordered as $V(G) = \{v_1, v_2, \cdots v_n\}$. The \textbf{adjacency matrix} of $G$ is the $n\times n$ matrix $A(G) = [a_{ij}]$ such that $a_{ij} = |\{e\in E(G) | f_G(e) = \{v_i, v_j\}\}|$
 \end{compactitem}
 \section{Trees}
 \begin{compactitem}
